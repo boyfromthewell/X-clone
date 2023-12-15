@@ -1,3 +1,3 @@
-export default function Login() {
-  <div>로그인</div>;
+export default function LoginModal() {
+  return <main>로그인 모달</main>;
 }
