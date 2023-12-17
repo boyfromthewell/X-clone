@@ -1,4 +1,7 @@
-import style from "./signup.module.css";
+// 기본적으로 next14 의 모든 컴포넌트들은 서버 컴포넌트
+// 클라이언트 컴포넌트로 바꾸기 위해선 "use client" 사용
+"use client";
+import style from "./login.module.css";
 import { useRouter } from "next/navigation";
 import { ChangeEventHandler, FormEventHandler, useState } from "react";
 
@@ -6,7 +9,9 @@ export default function SignupModal() {
   const [id, setId] = useState();
   const [password, setPassword] = useState();
   const [message, setMessage] = useState();
+
   const onSubmit = () => {};
+
   const onClickClose = () => {};
 
   const onChangeId = () => {};
