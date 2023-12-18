@@ -78,7 +78,6 @@
 }
 
 .rightSectionInner {
-  background-color: aqua;
   height: 100%;
   width: 990px;
   display: flex;
@@ -90,7 +89,6 @@
 }
 
 .rightSection {
-  background-color: blue;
   width: 350px;
   height: 100%;
 }
