@@ -83,6 +83,9 @@
   color: white;
   font-size: 17px;
 }
+.actionButton:disabled:hover {
+  background-color: rgb(15, 20, 25);
+}
 .actionButton:disabled {
   opacity: 0.5;
 }
