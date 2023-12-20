@@ -1,0 +1,88 @@
+.post {
+  display: flex;
+  flex-direction: column;
+  padding: 12px 16px;
+  border-color: rgb(239, 243, 244);
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  transition-property: background-color, box-shadow;
+  transition-duration: 0.2s;
+  cursor: pointer;
+}
+.post:hover {
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+.postWrapper {
+  display: flex;
+  flex-direction: row;
+}
+
+.postUserSection {
+  margin-right: 12px;
+  width: 40px;
+}
+
+.postUserImage {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+}
+
+.postShade {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.postShade:hover {
+  background-color: rgba(26, 26, 26, 0.15);
+}
+
+.postUserImage img {
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  object-fit: cover;
+}
+
+.postUserName {
+  font-weight: bold;
+}
+
+.postUserNick,
+.postDate {
+  color: rgb(83, 100, 113);
+}
+
+.postDate:hover {
+  text-decoration: underline;
+}
+
+.postImageSection {
+}
+
+.postBody {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.postUserName:hover {
+  text-decoration: underline;
+}
+
+.postMeta {
+  display: flex;
+  flex-direction: row;
+}
+
+.postImageSection img {
+  margin-top: 12px;
+  width: 100%;
+  border-radius: 16px;
+}
