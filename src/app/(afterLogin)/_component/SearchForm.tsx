@@ -1,6 +1,6 @@
 import styles from "./rightSearchZone.module.css";
 
-export default function SearchForm() {
+export default function SearchForm({ q }: { q?: string }) {
   return (
     <form className={styles.search}>
       <svg width={20} viewBox="0 0 24 24" aria-hidden="true">

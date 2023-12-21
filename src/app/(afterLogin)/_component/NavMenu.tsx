@@ -5,10 +5,11 @@ import styles from "./navMenu.module.css";
 
 export default function NavMenu() {
   const segment = useSelectedLayoutSegment();
-  console.log(segment);
+
   const me = {
     id: "calmdownman",
   };
+
   return (
     <>
       <li>
