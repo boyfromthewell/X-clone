@@ -3,13 +3,14 @@ import styles from "./post.module.css";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import "dayjs/locale/ko";
+import { faker } from "@faker-js/faker";
 import ActionButtons from "./ActionButtons";
 import PostArticle from "./PostArticle";
 
 dayjs.locale("ko");
 dayjs.extend(relativeTime);
 
-export default function Post() {
+export default function Post({ noImage }: { noImage?: boolean }) {
   const target = {
     postId: 1,
     User: {
@@ -19,8 +20,12 @@ export default function Post() {
     },
     content: "아기가 치즈를 참 좋아하나봐요^^",
     createdAt: new Date(),
-    Images: [],
+    Images: [] as any,
   };
+
+  if (Math.random() > 0.5 && !noImage) {
+    target.Images.push({ imageId: 1, link: faker.image.urlLoremFlickr() });
+  }
 
   return (
     <PostArticle post={target}>
@@ -47,11 +52,14 @@ export default function Post() {
           </div>
           <div>{target.content}</div>
           <div className={styles.postImageSection}>
-            {/* {target.Images.length > 0 && (
-              <div className={styles.postImageSection}>
-                <img src={target.Images[0]?.Link} alt="" />
-              </div>
-            )} */}
+            {target.Images.length > 0 && (
+              <Link
+                href={`/${target.User.id}/status/${target.postId}/photo/${target.Images[0].imageId}`}
+                className={styles.postImageSection}
+              >
+                <img src={target.Images[0].link} alt="" />
+              </Link>
+            )}
           </div>
           <ActionButtons />
         </div>

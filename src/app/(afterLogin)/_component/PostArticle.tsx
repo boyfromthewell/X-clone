@@ -14,7 +14,7 @@ type PostArticleProps = {
       image: string;
     };
     createdAt: Date;
-    Images: string[];
+    Images: any;
   };
 };
 
