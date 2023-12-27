@@ -64,9 +64,6 @@
   text-decoration: underline;
 }
 
-.postImageSection {
-}
-
 .postBody {
   display: flex;
   flex-direction: column;
@@ -81,10 +78,99 @@
   flex-direction: row;
 }
 
-.postImageSection img {
+.postImageSection {
+  display: inline-block;
   margin-top: 12px;
   width: 100%;
   border-radius: 16px;
+}
+
+.postImageSection.oneImage {
+  max-height: 510px;
+  background-repeat: no-repeat;
+}
+
+.postImageSection img {
+  width: 100%;
+  max-height: 510px;
+  border-radius: 16px;
+}
+
+.postImageSection.twoImages {
+  display: flex;
+  flex-direction: row;
+  height: 272px;
+  gap: 2px;
+}
+
+.postImageSection.twoImages a {
+  flex: 1;
+}
+
+.postImageSection.twoImages a:first-child {
+  border-top-left-radius: 16px;
+  border-bottom-left-radius: 16px;
+}
+
+.postImageSection.twoImages a:last-child {
+  border-top-right-radius: 16px;
+  border-bottom-right-radius: 16px;
+}
+
+.postImageSection.threeImages {
+  height: 272px;
+  display: flex;
+  flex-direction: row;
+  gap: 2px;
+}
+
+.postImageSection.threeImages > a,
+.postImageSection.threeImages > div {
+  flex: 1;
+}
+
+.postImageSection.threeImages > div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.postImageSection.threeImages > div > a {
+  flex: 1;
+}
+
+.postImageSection.threeImages > a {
+  border-top-left-radius: 16px;
+  border-bottom-left-radius: 16px;
+}
+
+.postImageSection.threeImages > div > a:first-child {
+  border-top-right-radius: 16px;
+}
+
+.postImageSection.threeImages > div > a:last-child {
+  border-bottom-right-radius: 16px;
+}
+
+.postImageSection.fourImages {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  height: 272px;
+}
+
+.postImageSection.fourImages > a:nth-child(1) {
+  border-top-left-radius: 16px;
+}
+.postImageSection.fourImages > a:nth-child(2) {
+  border-top-right-radius: 16px;
+}
+.postImageSection.fourImages > a:nth-child(3) {
+  border-bottom-left-radius: 16px;
+}
+.postImageSection.fourImages > a:nth-child(4) {
+  border-bottom-right-radius: 16px;
 }
 
 .actionButtons {
