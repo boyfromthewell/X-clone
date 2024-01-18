@@ -13,6 +13,12 @@ function generateDate() {
     {id: 'socksman', nickname: '주펄', image: '/temp.png'},
     {id: 'calmdownman', nickname: '침덩이', image: '/profile.png'},
     {id: 'leoturtle', nickname: '레오', image: faker.image.avatar()},
+  ];
+
+  const RecommendUser = [
+    {id: 'thankyou', nickname: '최고민수', image: '/minsu.jpg'},
+    {id: "chadoljjambbong", nickname: "철면수심", image: "/profile2.jpg"},
+    {id: "panibottle", nickname: "빠니보틀", image: "panni.jpg" }
   ]
 
 export const handlers = [
@@ -206,5 +212,149 @@ export const handlers = [
           createdAt: generateDate(),
         },
       ])
-  })
+  }),
+  http.get('/api/users/:userId/posts', ({ request, params }) => {
+    const { userId } = params;
+    /* const url = new URL(request.url);
+    const parseInt(url.searchParams.get( as string) || 0; */
+
+    return HttpResponse.json( [
+        {
+          postId: 1,
+          User: User[2],
+          content: `${1} ${userId}의 게시글`,
+          Images: [{imageId: 1, link: faker.image.urlLoremFlickr()}],
+          createdAt: generateDate(),
+        },
+        {
+          postId: 2,
+          User: User[2],
+          content: `${2} ${userId}의 게시글`,
+          Images: [
+            {imageId: 1, link: faker.image.urlLoremFlickr()},
+            {imageId: 2, link: faker.image.urlLoremFlickr()},
+          ],
+          createdAt: generateDate(),
+        },
+        {
+          postId: 3,
+          User: User[2],
+          content: `${3} ${userId}의 게시글`,
+          Images: [],
+          createdAt: generateDate(),
+        },
+        {
+          postId: 4,
+          User: User[2],
+          content: `${4} ${userId}의 게시글`,
+          Images: [
+            {imageId: 1, link: faker.image.urlLoremFlickr()},
+            {imageId: 2, link: faker.image.urlLoremFlickr()},
+            {imageId: 3, link: faker.image.urlLoremFlickr()},
+            {imageId: 4, link: faker.image.urlLoremFlickr()},
+          ],
+          createdAt: generateDate(),
+        },
+        {
+          postId: 5,
+          User: User[2],
+          content: `${5} ${userId}의 게시글`,
+          Images: [
+            {imageId: 1, link: faker.image.urlLoremFlickr()},
+            {imageId: 2, link: faker.image.urlLoremFlickr()},
+            {imageId: 3, link: faker.image.urlLoremFlickr()},
+          ],
+          createdAt: generateDate(),
+        },
+      ])
+  }),
+  http.get('api/users/:userId', ({ request, params })=>{
+    const { userId } = params;
+    return HttpResponse.json(User[1]);
+  }),
+  http.get('/api/users/:userId/posts/:postId', ({ request, params }) => {
+    const { userId, postId } = params;
+    /* const url = new URL(request.url);
+    const parseInt(url.searchParams.get( as string) || 0; */
+
+    return HttpResponse.json(
+        {
+          postId: 6,
+          User: User[1],
+          content: `${1} ${userId}의 게시글 ${postId}의 내용`,
+          Images: [{imageId: 1, link: faker.image.urlLoremFlickr()}],
+          createdAt: generateDate(),
+        }
+      )
+  }),
+  http.get('/api/users/:userId/posts/:postId/comments', ({ request, params }) => {
+    const { userId, postId } = params;
+    /* const url = new URL(request.url);
+    const parseInt(url.searchParams.get( as string) || 0; */
+
+    return HttpResponse.json( [
+        {
+          postId: 1,
+          User: User[0],
+          content: `${1} ${userId}의 게시글 ${postId}의 답글`,
+          Images: [{imageId: 1, link: faker.image.urlLoremFlickr()}],
+          createdAt: generateDate(),
+        },
+        {
+          postId: 2,
+          User: User[0],
+          content: `${2} ${userId}의 게시글 ${postId}의 답글`,
+          Images: [
+            {imageId: 1, link: faker.image.urlLoremFlickr()},
+            {imageId: 2, link: faker.image.urlLoremFlickr()},
+          ],
+          createdAt: generateDate(),
+        },
+        {
+          postId: 3,
+          User: User[0],
+          content: `${3} ${userId}의 게시글 ${postId}의 답글`,
+          Images: [],
+          createdAt: generateDate(),
+        },
+        {
+          postId: 4,
+          User: User[0],
+          content: `${4} ${userId}의 게시글 ${postId}의 답글`,
+          Images: [
+            {imageId: 1, link: faker.image.urlLoremFlickr()},
+            {imageId: 2, link: faker.image.urlLoremFlickr()},
+            {imageId: 3, link: faker.image.urlLoremFlickr()},
+            {imageId: 4, link: faker.image.urlLoremFlickr()},
+          ],
+          createdAt: generateDate(),
+        },
+        {
+          postId: 5,
+          User: User[0],
+          content: `${5} ${userId}의 게시글 ${postId}의 답글`,
+          Images: [
+            {imageId: 1, link: faker.image.urlLoremFlickr()},
+            {imageId: 2, link: faker.image.urlLoremFlickr()},
+            {imageId: 3, link: faker.image.urlLoremFlickr()},
+          ],
+          createdAt: generateDate(),
+        },
+      ])
+  }),
+  http.get('/api/followRecommends', ({ request }) => {
+    return HttpResponse.json(RecommendUser);
+  }),
+  http.get('/api/trends', ({ request }) => {
+    return HttpResponse.json([
+      {tagId: 1, title: "침덩이", count: '1234'},
+      {tagId: 2, title: "55도발", count: '55'},
+      {tagId: 3, title: "침착맨 삼국지", count: '223'},
+      {tagId: 4, title: "불침번", count: '134'},
+      {tagId: 5, title: "침덩이", count: '1234'},
+      {tagId: 6, title: "55도발", count: '55'},
+      {tagId: 7, title: "침착맨 삼국지", count: '223'},
+      {tagId: 8, title: "불침번", count: '134'},   
+    ]);
+  }),
 ];
