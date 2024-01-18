@@ -52,14 +52,14 @@ export const handlers = [
             {
               postId: 1,
               User: User[0],
-              content: `${1} Z.com is so marvelous. I'm gonna buy that.`,
+              content: `${1} 아기가 치즈를 좋아하나봐요`,
               Images: [{imageId: 1, link: faker.image.urlLoremFlickr()}],
               createdAt: generateDate(),
             },
             {
               postId: 2,
               User: User[0],
-              content: `${2} Z.com is so marvelous. I'm gonna buy that.`,
+              content: `${2} 아기가 치즈를 좋아하나봐요`,
               Images: [
                 {imageId: 1, link: faker.image.urlLoremFlickr()},
                 {imageId: 2, link: faker.image.urlLoremFlickr()},
@@ -69,14 +69,14 @@ export const handlers = [
             {
               postId: 3,
               User: User[0],
-              content: `${3} Z.com is so marvelous. I'm gonna buy that.`,
+              content: `${3} 아기가 치즈를 좋아하나봐요`,
               Images: [],
               createdAt: generateDate(),
             },
             {
               postId: 4,
               User: User[0],
-              content: `${4} Z.com is so marvelous. I'm gonna buy that.`,
+              content: `${4} 아기가 치즈를 좋아하나봐요`,
               Images: [
                 {imageId: 1, link: faker.image.urlLoremFlickr()},
                 {imageId: 2, link: faker.image.urlLoremFlickr()},
@@ -88,7 +88,7 @@ export const handlers = [
             {
               postId: 5,
               User: User[0],
-              content: `${5} Z.com is so marvelous. I'm gonna buy that.`,
+              content: `${5} 아기가 치즈를 좋아하나봐요`,
               Images: [
                 {imageId: 1, link: faker.image.urlLoremFlickr()},
                 {imageId: 2, link: faker.image.urlLoremFlickr()},
@@ -97,5 +97,114 @@ export const handlers = [
               createdAt: generateDate(),
             },
           ])
-    })
+    }),
+    http.get('/api/followingPosts', ({ request }) =>{
+      /* const url = new URL(request.url);
+      const parseInt(url.searchParams.get( as string) || 0; */
+
+      return HttpResponse.json( [
+          {
+            postId: 1,
+            User: User[1],
+            content: `${1} 팔로우 하지마라 가라 재미없다`,
+            Images: [{imageId: 1, link: faker.image.urlLoremFlickr()}],
+            createdAt: generateDate(),
+          },
+          {
+            postId: 2,
+            User: User[1],
+            content: `${2} 팔로우 하지마라 가라 재미없다`,
+            Images: [
+              {imageId: 1, link: faker.image.urlLoremFlickr()},
+              {imageId: 2, link: faker.image.urlLoremFlickr()},
+            ],
+            createdAt: generateDate(),
+          },
+          {
+            postId: 3,
+            User: User[1],
+            content: `${3} 팔로우 하지마라 가라 재미없다`,
+            Images: [],
+            createdAt: generateDate(),
+          },
+          {
+            postId: 4,
+            User: User[1],
+            content: `${4} 팔로우 하지마라 가라 재미없다`,
+            Images: [
+              {imageId: 1, link: faker.image.urlLoremFlickr()},
+              {imageId: 2, link: faker.image.urlLoremFlickr()},
+              {imageId: 3, link: faker.image.urlLoremFlickr()},
+              {imageId: 4, link: faker.image.urlLoremFlickr()},
+            ],
+            createdAt: generateDate(),
+          },
+          {
+            postId: 5,
+            User: User[1],
+            content: `${5} 팔로우 하지마라 가라 재미없다`,
+            Images: [
+              {imageId: 1, link: faker.image.urlLoremFlickr()},
+              {imageId: 2, link: faker.image.urlLoremFlickr()},
+              {imageId: 3, link: faker.image.urlLoremFlickr()},
+            ],
+            createdAt: generateDate(),
+          },
+        ])
+  }),
+  http.get('/api/search/:tag', ({ request, params }) => {
+    const { tag } = params;
+    /* const url = new URL(request.url);
+    const parseInt(url.searchParams.get( as string) || 0; */
+
+    return HttpResponse.json( [
+        {
+          postId: 1,
+          User: User[2],
+          content: `${1} search result ${tag}`,
+          Images: [{imageId: 1, link: faker.image.urlLoremFlickr()}],
+          createdAt: generateDate(),
+        },
+        {
+          postId: 2,
+          User: User[2],
+          content: `${2} search result ${tag}`,
+          Images: [
+            {imageId: 1, link: faker.image.urlLoremFlickr()},
+            {imageId: 2, link: faker.image.urlLoremFlickr()},
+          ],
+          createdAt: generateDate(),
+        },
+        {
+          postId: 3,
+          User: User[2],
+          content: `${3} search result ${tag}`,
+          Images: [],
+          createdAt: generateDate(),
+        },
+        {
+          postId: 4,
+          User: User[2],
+          content: `${4} search result ${tag}`,
+          Images: [
+            {imageId: 1, link: faker.image.urlLoremFlickr()},
+            {imageId: 2, link: faker.image.urlLoremFlickr()},
+            {imageId: 3, link: faker.image.urlLoremFlickr()},
+            {imageId: 4, link: faker.image.urlLoremFlickr()},
+          ],
+          createdAt: generateDate(),
+        },
+        {
+          postId: 5,
+          User: User[2],
+          content: `${5} search result ${tag}`,
+          Images: [
+            {imageId: 1, link: faker.image.urlLoremFlickr()},
+            {imageId: 2, link: faker.image.urlLoremFlickr()},
+            {imageId: 3, link: faker.image.urlLoremFlickr()},
+          ],
+          createdAt: generateDate(),
+        },
+      ])
+  })
 ];
