@@ -221,14 +221,14 @@ export const handlers = [
     return HttpResponse.json( [
         {
           postId: 1,
-          User: User[2],
+          User: User[1],
           content: `${1} ${userId}의 게시글`,
           Images: [{imageId: 1, link: faker.image.urlLoremFlickr()}],
           createdAt: generateDate(),
         },
         {
           postId: 2,
-          User: User[2],
+          User: User[1],
           content: `${2} ${userId}의 게시글`,
           Images: [
             {imageId: 1, link: faker.image.urlLoremFlickr()},
@@ -238,14 +238,14 @@ export const handlers = [
         },
         {
           postId: 3,
-          User: User[2],
+          User: User[1],
           content: `${3} ${userId}의 게시글`,
           Images: [],
           createdAt: generateDate(),
         },
         {
           postId: 4,
-          User: User[2],
+          User: User[1],
           content: `${4} ${userId}의 게시글`,
           Images: [
             {imageId: 1, link: faker.image.urlLoremFlickr()},
@@ -257,7 +257,7 @@ export const handlers = [
         },
         {
           postId: 5,
-          User: User[2],
+          User: User[1],
           content: `${5} ${userId}의 게시글`,
           Images: [
             {imageId: 1, link: faker.image.urlLoremFlickr()},
@@ -270,7 +270,13 @@ export const handlers = [
   }),
   http.get('api/users/:userId', ({ request, params })=>{
     const { userId } = params;
-    return HttpResponse.json(User[1]);
+    const found = User.find((v)=> v.id === userId);
+    if (found) {
+      return HttpResponse.json(found);
+    }
+    return HttpResponse.json({message:'no_such_user'}, {
+      status: 404
+    })
   }),
   http.get('/api/users/:userId/posts/:postId', ({ request, params }) => {
     const { userId, postId } = params;

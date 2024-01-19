@@ -3,6 +3,7 @@ export async function getPostRecommends() {
         next: {
             tags: ['posts', 'recommends'],
         },
+        cache:'no-store'
     });
     if (!res.ok) throw new Error('Failded to fetch data');
 

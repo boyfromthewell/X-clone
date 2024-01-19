@@ -1,39 +1,28 @@
-import BackButton from '../_component/BackButton';
-import FollowButton from '../_component/FollowButton';
-import Post from '../_component/Post';
-import styles from './profile.module.css';
+import { HydrationBoundary, QueryClient, dehydrate } from '@tanstack/react-query';
+import UserPosts from './_component/UserPosts';
+import { getUserPosts } from './_lib/getUserPosts';
+import UserInfo from './_component/UserInfo';
+import { getUser } from './_lib/getUser';
 
-export default function Profile() {
-    const user = {
-        id: 'calmdownman',
-        nickname: '침덩이',
-        image: '/profile.png',
-    };
+type ProfileProps = {
+    params: { username: string };
+};
+
+export default async function Profile({ params }: ProfileProps) {
+    const { username } = params;
+    const queryClient = new QueryClient();
+    await queryClient.prefetchQuery({ queryKey: ['users', username], queryFn: getUser });
+    await queryClient.prefetchQuery({ queryKey: ['posts', 'users', username], queryFn: getUserPosts });
+    const dehydratedState = dehydrate(queryClient);
 
     return (
         <main>
-            <div className={styles.header}>
-                <BackButton />
-                <h3 className={styles.headerTitle}>{user.nickname}</h3>
-            </div>
-            <div className={styles.userZone}>
-                <div className={styles.userImage}>
-                    <img src={user.image} alt={user.id} />
+            <HydrationBoundary state={dehydratedState}>
+                <UserInfo username={username} />
+                <div>
+                    <UserPosts username={username} />
                 </div>
-                <div className={styles.userName}>
-                    <div>{user.nickname}</div>
-                    <div>@{user.id}</div>
-                </div>
-                <FollowButton />
-            </div>
-            <div>
-                <Post />
-                <Post />
-                <Post />
-                <Post />
-                <Post />
-                <Post />
-            </div>
+            </HydrationBoundary>
         </main>
     );
 }
