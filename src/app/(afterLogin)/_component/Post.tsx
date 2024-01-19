@@ -3,7 +3,6 @@ import styles from './post.module.css';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import 'dayjs/locale/ko';
-import { faker } from '@faker-js/faker';
 import ActionButtons from './ActionButtons';
 import PostArticle from './PostArticle';
 import PostImages from './PostImages';
@@ -18,7 +17,6 @@ type PostType = {
 };
 
 export default function Post({ noImage, post }: PostType) {
-    console.log(post);
     return (
         <PostArticle post={post}>
             <div className={styles.postWrapper}>
@@ -39,9 +37,11 @@ export default function Post({ noImage, post }: PostType) {
                         <span className={styles.postDate}>{dayjs(post.createdAt).fromNow(true)}</span>
                     </div>
                     <div>{post.content}</div>
-                    <div>
-                        <PostImages post={post} />
-                    </div>
+                    {!noImage && (
+                        <div>
+                            <PostImages post={post} />
+                        </div>
+                    )}
                     <ActionButtons />
                 </div>
             </div>

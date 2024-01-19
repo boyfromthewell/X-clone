@@ -1,44 +1,36 @@
-import Post from "@/app/(afterLogin)/_component/Post";
-import styles from "./photoModal.module.css";
-import { faker } from "@faker-js/faker";
-import ActionButtons from "@/app/(afterLogin)/_component/ActionButtons";
-import CommentForm from "@/app/(afterLogin)/[username]/status/[id]/_component/CommentForm";
-import PhotoModalCloseButton from "./_component/PhotoModalCloseButton";
+import styles from './photoModal.module.css';
+import CommentForm from '@/app/(afterLogin)/[username]/status/[id]/_component/CommentForm';
+import PhotoModalCloseButton from './_component/PhotoModalCloseButton';
+import { HydrationBoundary, QueryClient, dehydrate } from '@tanstack/react-query';
+import { getSinglePost } from '@/app/(afterLogin)/[username]/status/[id]/_lib/getSinglePost';
+import { getComments } from '@/app/(afterLogin)/[username]/status/[id]/_lib/getComments';
+import SinglePost from '@/app/(afterLogin)/[username]/status/[id]/_component/SinglePost';
+import Comments from '@/app/(afterLogin)/[username]/status/[id]/_component/Comments';
+import ImageZone from './_component/ImageZone';
 
-export default function PageModal() {
-  const photo = {
-    imageId: 1,
-    link: faker.image.urlLoremFlickr(),
-    Post: {
-      content: faker.lorem.text(),
-    },
-  };
-  return (
-    <div className={styles.container}>
-      <PhotoModalCloseButton />
-      <div className={styles.imageZone}>
-        <img src={photo.link} alt={photo.Post?.content} />
-        <div
-          className={styles.image}
-          style={{ backgroundImage: `url(${photo.link})` }}
-        />
-        <div className={styles.buttonZone}>
-          <div className={styles.buttonInner}>
-            <ActionButtons white />
-          </div>
+type Props = {
+    params: { id: string };
+};
+
+export default async function PageModal({ params }: Props) {
+    const { id } = params;
+
+    const queryClient = new QueryClient();
+    await queryClient.prefetchQuery({ queryKey: ['posts', id], queryFn: getSinglePost });
+    await queryClient.prefetchQuery({ queryKey: ['posts', id, 'comments'], queryFn: getComments });
+    const dehydratedState = dehydrate(queryClient);
+
+    return (
+        <div className={styles.container}>
+            <HydrationBoundary state={dehydratedState}>
+                <PhotoModalCloseButton />
+                <ImageZone id={id} />
+                <div className={styles.commentZone}>
+                    <SinglePost id={id} noImage />
+                    <CommentForm id={id} />
+                    <Comments id={id} />
+                </div>
+            </HydrationBoundary>
         </div>
-      </div>
-      <div className={styles.commentZone}>
-        <Post noImage />
-        <CommentForm />
-        <Post />
-        <Post />
-        <Post />
-        <Post />
-        <Post />
-        <Post />
-        <Post />
-      </div>
-    </div>
-  );
+    );
 }
