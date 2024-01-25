@@ -50,22 +50,22 @@ export const handlers = [
             }
         })
     }),
-    http.get('/api/postRecommends', ({ request }) =>{
-        /* const url = new URL(request.url);
-        const parseInt(url.searchParams.get( as string) || 0; */
+    http.get('/api/postRecommends?cursor=0', ({ request }) =>{
+        const url = new URL(request.url);
+        const cursor = parseInt(url.searchParams.get('cursor') as string) || 0;
 
         return HttpResponse.json( [
             {
-              postId: 1,
+              postId: cursor + 1,
               User: User[0],
-              content: `${1} 아기가 치즈를 좋아하나봐요`,
+              content: `${cursor+ 1} 아기가 치즈를 좋아하나봐요`,
               Images: [{imageId: 1, link: faker.image.urlLoremFlickr()}],
               createdAt: generateDate(),
             },
             {
-              postId: 2,
+              postId: cursor + 2,
               User: User[0],
-              content: `${2} 아기가 치즈를 좋아하나봐요`,
+              content: `${cursor+ 2} 아기가 치즈를 좋아하나봐요`,
               Images: [
                 {imageId: 1, link: faker.image.urlLoremFlickr()},
                 {imageId: 2, link: faker.image.urlLoremFlickr()},
@@ -73,16 +73,16 @@ export const handlers = [
               createdAt: generateDate(),
             },
             {
-              postId: 3,
+              postId: cursor + 3,
               User: User[0],
-              content: `${3} 아기가 치즈를 좋아하나봐요`,
+              content: `${cursor + 3} 아기가 치즈를 좋아하나봐요`,
               Images: [],
               createdAt: generateDate(),
             },
             {
-              postId: 4,
+              postId: cursor + 4,
               User: User[0],
-              content: `${4} 아기가 치즈를 좋아하나봐요`,
+              content: `${cursor + 4} 아기가 치즈를 좋아하나봐요`,
               Images: [
                 {imageId: 1, link: faker.image.urlLoremFlickr()},
                 {imageId: 2, link: faker.image.urlLoremFlickr()},
@@ -92,9 +92,9 @@ export const handlers = [
               createdAt: generateDate(),
             },
             {
-              postId: 5,
+              postId: cursor + 5,
               User: User[0],
-              content: `${5} 아기가 치즈를 좋아하나봐요`,
+              content: `${cursor + 5} 아기가 치즈를 좋아하나봐요`,
               Images: [
                 {imageId: 1, link: faker.image.urlLoremFlickr()},
                 {imageId: 2, link: faker.image.urlLoremFlickr()},
