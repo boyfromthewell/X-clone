@@ -8,6 +8,7 @@ import TabDecider from './_component/TabDecider';
 import { Suspense } from 'react';
 import Loading from './loading';
 import TabDeciderSuspense from './_component/TabDeciderSuspense';
+import { auth } from '@/auth';
 
 /* 
  page.tsx -> loading.tsx 에서 담당
@@ -16,11 +17,13 @@ import TabDeciderSuspense from './_component/TabDeciderSuspense';
 */
 
 export default async function Home() {
+    const session = await auth();
+
     return (
         <main className={styles.main}>
             <TabProvider>
                 <Tab />
-                <PostForm />
+                <PostForm me={session} />
                 <Suspense fallback={<Loading />}>
                     <TabDeciderSuspense />
                 </Suspense>
