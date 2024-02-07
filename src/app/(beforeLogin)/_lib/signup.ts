@@ -17,6 +17,8 @@ export default async (prevState: any, formData: FormData) => {
         return { message: 'no_images' };
     }
 
+    formData.set('nickname', formData.get('name') as string);
+
     let shouldRedirect = false;
     try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/users`, {
@@ -24,7 +26,7 @@ export default async (prevState: any, formData: FormData) => {
             body: formData,
             credentials: 'include',
         });
-      
+        console.log(res);
         if (res.status == 403) {
             return { message: 'user_exists' };
         }

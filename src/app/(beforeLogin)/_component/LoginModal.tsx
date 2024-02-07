@@ -15,23 +15,28 @@ export default function LoginModal() {
 
     const router = useRouter();
 
-    const onSubmit: FormEventHandler<HTMLFormElement> = (e) => {
+    const onSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
         e.preventDefault();
         setMessage('');
-        const callbackUrl = `${process.env.NEXT_PUBLIC_LOCAL}/home`;
-        console.log('DD', callbackUrl);
-        signIn('credentials', {
-            username: id,
-            password,
-            redirect: true,
-            callbackUrl,
-        })
-            .then((res) => {
-                console.log('res', res);
-                router.replace(callbackUrl);
-            })
-            .catch((err) => console.log(err));
+        try {
+            const response = await signIn('credentials', {
+                username: id,
+                password,
+                redirect: false,
+            });
+            console.log(response);
+            if (response?.error) {
+                setMessage('아이디와 비밀번호가 일치하지 않습니다.');
+            } else {
+                router.replace('/home');
+            }
+        } catch (err) {
+            console.error(err);
+            setMessage('아이디와 비밀번호가 일치하지 않습니다.');
+        }
     };
+
+    console.log(message);
 
     const onClickClose = () => {
         router.back();
