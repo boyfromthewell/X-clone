@@ -46,7 +46,7 @@ export default function Post({ noImage, post }: PostType) {
                             <PostImages post={post} />
                         </div>
                     )}
-                    <ActionButtons postId={post.postId} />
+                    <ActionButtons post={post} />
                 </div>
             </div>
         </PostArticle>
