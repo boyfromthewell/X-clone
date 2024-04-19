@@ -4,6 +4,8 @@ import styles from './followRecommend.module.css';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useSession } from 'next-auth/react';
 import cx from 'classnames';
+import Link from 'next/link';
+import { MouseEventHandler } from 'react';
 
 type FollowRecommendProps = {
     user: User;
@@ -11,7 +13,7 @@ type FollowRecommendProps = {
 
 export default function FollowRecommend({ user }: FollowRecommendProps) {
     const { data: session } = useSession();
-    const followed = !!user.Followers?.find((v) => v.userId === session?.user?.email);
+    const followed = !!user.Followers?.find((v) => v.id === session?.user?.email);
 
     const queryClient = useQueryClient();
 
@@ -29,7 +31,7 @@ export default function FollowRecommend({ user }: FollowRecommendProps) {
                 const shallow = [...value];
                 shallow[index] = {
                     ...shallow[index],
-                    Followers: [{ userId: session?.user?.email as string }],
+                    Followers: [{ id: session?.user?.email as string }],
                     _count: {
                         ...shallow[index]._count,
                         Followers: shallow[index]._count.Followers + 1,
@@ -37,8 +39,49 @@ export default function FollowRecommend({ user }: FollowRecommendProps) {
                 };
                 queryClient.setQueryData(['users', 'followRecommends'], shallow);
             }
+
+            const value2: User | undefined = queryClient.getQueryData(['users', userId]);
+            if (value2) {
+                const shallow = {
+                    ...value2,
+
+                    Followers: [{ id: session?.user?.email as string }],
+                    _count: {
+                        ...value2._count,
+                        Followers: value2._count.Followers + 1,
+                    },
+                };
+                queryClient.setQueryData(['users', userId], shallow);
+            }
         },
-        onError() {},
+        onError(error, userId: string) {
+            const value: User[] | undefined = queryClient.getQueryData(['users', 'followRecommends']);
+            if (value) {
+                const index = value.findIndex((v) => v.id === userId);
+                const shallow = [...value];
+                shallow[index] = {
+                    ...shallow[index],
+                    Followers: shallow[index].Followers.filter((v) => v.id !== session?.user?.email),
+                    _count: {
+                        ...shallow[index]._count,
+                        Followers: shallow[index]._count.Followers - 1,
+                    },
+                };
+                queryClient.setQueryData(['users', 'followRecommends'], shallow);
+            }
+            const value2: User | undefined = queryClient.getQueryData(['users', userId]);
+            if (value2) {
+                const shallow = {
+                    ...value2,
+                    Followers: value2.Followers.filter((v) => v.id !== session?.user?.email),
+                    _count: {
+                        ...value2._count,
+                        Followers: value2._count.Followers - 1,
+                    },
+                };
+                queryClient.setQueryData(['users', userId], shallow);
+            }
+        },
     });
 
     const unfolLow = useMutation({
@@ -55,7 +98,7 @@ export default function FollowRecommend({ user }: FollowRecommendProps) {
                 const shallow = [...value];
                 shallow[index] = {
                     ...shallow[index],
-                    Followers: shallow[index].Followers.filter((v) => v.userId !== session?.user?.email),
+                    Followers: shallow[index].Followers.filter((v) => v.id !== session?.user?.email),
                     _count: {
                         ...shallow[index]._count,
                         Followers: shallow[index]._count.Followers - 1,
@@ -63,11 +106,54 @@ export default function FollowRecommend({ user }: FollowRecommendProps) {
                 };
                 queryClient.setQueryData(['users', 'followRecommends'], shallow);
             }
+            const value2: User | undefined = queryClient.getQueryData(['users', userId]);
+            if (value2) {
+                const shallow = {
+                    ...value2,
+                    Followers: value2.Followers.filter((v) => v.id !== session?.user?.email),
+                    _count: {
+                        ...value2._count,
+                        Followers: value2._count.Followers - 1,
+                    },
+                };
+                queryClient.setQueryData(['users', userId], shallow);
+            }
         },
-        onError() {},
+        onError(error, userId: string) {
+            const value: User[] | undefined = queryClient.getQueryData(['users', 'followRecommends']);
+            if (value) {
+                const index = value.findIndex((v) => v.id === userId);
+                const shallow = [...value];
+                shallow[index] = {
+                    ...shallow[index],
+                    Followers: [{ id: session?.user?.email as string }],
+                    _count: {
+                        ...shallow[index]._count,
+                        Followers: shallow[index]._count.Followers + 1,
+                    },
+                };
+                queryClient.setQueryData(['users', 'followRecommends'], shallow);
+            }
+
+            const value2: User | undefined = queryClient.getQueryData(['users', userId]);
+            if (value2) {
+                const shallow = {
+                    ...value2,
+
+                    Followers: [{ id: session?.user?.email as string }],
+                    _count: {
+                        ...value2._count,
+                        Followers: value2._count.Followers + 1,
+                    },
+                };
+                queryClient.setQueryData(['users', userId], shallow);
+            }
+        },
     });
 
-    const handleClickFollow = () => {
+    const handleClickFollow: MouseEventHandler<HTMLButtonElement> = (e) => {
+        e.stopPropagation();
+        e.preventDefault();
         if (followed) {
             unfolLow.mutate(user.id);
         } else {
@@ -76,7 +162,7 @@ export default function FollowRecommend({ user }: FollowRecommendProps) {
     };
 
     return (
-        <div className={styles.container}>
+        <Link href={`/${user.id}`} className={styles.container}>
             <div className={styles.userLogoSection}>
                 <div className={styles.userLogo}>
                     <img src={user.image} alt={user.id} />
@@ -89,6 +175,6 @@ export default function FollowRecommend({ user }: FollowRecommendProps) {
             <div className={cx(styles.followButtonSection, followed && styles.followed)}>
                 <button onClick={handleClickFollow}>{followed ? '팔로잉' : '팔로우'}</button>
             </div>
-        </div>
+        </Link>
     );
 }

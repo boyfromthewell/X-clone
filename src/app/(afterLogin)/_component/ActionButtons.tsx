@@ -9,6 +9,7 @@ import { useSession } from 'next-auth/react';
 export default function ActionButtons({ white, post }: { white?: boolean; post: Post }) {
     const queryClient = useQueryClient();
     const { data: session } = useSession();
+
     const commented = !!post.Comments?.find((v) => v.userId === session?.user?.email);
     const reposted = !!post.Reposts?.find((v) => v.userId === session?.user?.email);
     const liked = !!post.Hearts?.find((v) => v.userId === session?.user?.email);
@@ -236,7 +237,7 @@ export default function ActionButtons({ white, post }: { white?: boolean; post: 
                         </g>
                     </svg>
                 </button>
-                <div className={styles.count}>{post._count.Comments || ''}</div>
+                <div className={styles.count}>{post._count?.Comments || ''}</div>
             </div>
             <div className={cx(styles.repostButton, reposted && styles.reposted, white && styles.white)}>
                 <button onClick={handleClickRepost}>
@@ -246,7 +247,7 @@ export default function ActionButtons({ white, post }: { white?: boolean; post: 
                         </g>
                     </svg>
                 </button>
-                <div className={styles.count}>{post._count.Reposts || ''}</div>
+                <div className={styles.count}>{post._count?.Reposts || ''}</div>
             </div>
             <div className={cx([styles.heartButton, liked && styles.liked, white && styles.white])}>
                 <button onClick={handleClickHeart}>
@@ -256,7 +257,7 @@ export default function ActionButtons({ white, post }: { white?: boolean; post: 
                         </g>
                     </svg>
                 </button>
-                <div className={styles.count}>{post._count.Hearts || ''}</div>
+                <div className={styles.count}>{post._count?.Hearts || ''}</div>
             </div>
         </div>
     );

@@ -2,7 +2,7 @@ import NextAuth from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials";
 import {NextResponse} from "next/server";
 import cookie from 'cookie';
-import { cookies } from "next/dist/client/components/headers";
+import { cookies } from "next/headers";
 
 export const {
   handlers: { GET, POST },
@@ -36,6 +36,7 @@ export const {
         })
 
         let setCookie = authResponse.headers.get('Set-Cookie');
+        console.log(authResponse.headers, "ddddddd");
         console.log('set-cookie', setCookie);
         if (setCookie) {
           const parsed = cookie.parse(setCookie)

@@ -6,6 +6,7 @@ import { useSession } from 'next-auth/react';
 import { useQuery } from '@tanstack/react-query';
 import { getTrends } from '../_lib/getTrends';
 import { Hashtag } from '@/model/Hashtag';
+import React from 'react';
 
 export default function TrendSection() {
     const pathname = usePathname();
@@ -19,13 +20,19 @@ export default function TrendSection() {
         enabled: !!session?.user,
     });
 
+    console.log(data);
+
     if (pathname === '/explore') return null;
     if (session?.user) {
         return (
             <div className={styles.trendBg}>
                 <div className={styles.trend}>
                     <h3>나를 위한 트렌드</h3>
-                    {data?.map((trend) => <Trend trend={trend} key={trend.tagId} />)}
+                    {data?.map((trend) => (
+                        <React.Fragment key={trend.tagId}>
+                            <Trend trend={trend} />
+                        </React.Fragment>
+                    ))}
                 </div>
             </div>
         );

@@ -4,10 +4,18 @@ import Post from '../_component/Post';
 import SearchForm from '../_component/SearchForm';
 import Tab from './_component/Tab';
 import SearchResult from './_component/SearchResult';
+import { Metadata } from 'next';
 
 type SearchProps = {
     searchParams: { q: string; f?: string; pf?: string };
 };
+
+export async function generateMetadata({ searchParams }: SearchProps): Promise<Metadata> {
+    return {
+        title: `${searchParams.q} - 검색 / X`,
+        description: `${searchParams.q} - 검색 / X`,
+    };
+}
 
 export default function Search({ searchParams }: SearchProps) {
     return (

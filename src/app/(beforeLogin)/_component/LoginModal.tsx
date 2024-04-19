@@ -24,7 +24,7 @@ export default function LoginModal() {
                 password,
                 redirect: false,
             });
-            console.log(response);
+            console.log(response, 'res');
             if (response?.error) {
                 setMessage('아이디와 비밀번호가 일치하지 않습니다.');
             } else {
@@ -35,8 +35,6 @@ export default function LoginModal() {
             setMessage('아이디와 비밀번호가 일치하지 않습니다.');
         }
     };
-
-    console.log(message);
 
     const onClickClose = () => {
         router.back();

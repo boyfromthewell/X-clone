@@ -9,12 +9,18 @@ import { Suspense } from 'react';
 import Loading from './loading';
 import TabDeciderSuspense from './_component/TabDeciderSuspense';
 import { auth } from '@/auth';
+import { Metadata } from 'next';
 
 /* 
  page.tsx -> loading.tsx 에서 담당
  서버 Suspense -> fallback
  react-query -> isPending
 */
+
+export const metadata: Metadata = {
+    title: '홈 / X',
+    description: '홈',
+};
 
 export default async function Home() {
     const session = await auth();
